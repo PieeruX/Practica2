@@ -1,7 +1,7 @@
 package practica2;
 
 import java.util.Scanner;
-
+System.out.println("hola");
 /**
  * Programa que simula una app de un parque de atracciones
  * @author Piera Merlo
