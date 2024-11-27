@@ -18,7 +18,8 @@ public class Ejercicio4 {
      * @return devuelve true si el acceso es denegado y false si es correcto
      */
 
-    public static boolean login (String usuarioReal, String userIntroducido, String passwReal, String psswwIntroducido){
+    public static boolean login (String usuarioReal, String userIntroducido,
+                                 String passwReal, String psswwIntroducido){
         boolean accesoDenegado;
         if (usuarioReal.equals(userIntroducido) && passwReal.equals(psswwIntroducido)){
             accesoDenegado = false;
@@ -49,7 +50,7 @@ public class Ejercicio4 {
 
     public static void mostrarAtracciones(){
 
-        System.out.println("****** Atracciones *******");
+        System.out.println("****** Nuestras atracciones *******");
         System.out.println("1- Los rápidos. Intensidad: suave\n" +
                 "2- Sillas voladoras. Intensidad: moderada\n" +
                 "3- La lanzadera. Intensidad: alta\n" +
@@ -133,7 +134,7 @@ public class Ejercicio4 {
      * @param entradaGeneral cantidad de entradas generales escogidas
      * @return devuelve el total de la operación de calcular todas las entradas
      */
-
+        //Corregir error si se introduce números negativos de entradas o no se escoge ninguna
     public static double calcularImporte(int entradaReducida, int entradaGeneral){
         final double GENERAL = 39.90, REDUCIDA = 29.90;
         double importeTotal = (entradaReducida * REDUCIDA) + (entradaGeneral * GENERAL);
