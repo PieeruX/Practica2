@@ -216,6 +216,20 @@ public class Ejercicio4 {
         return suma;
     }
 
+public static boolean premio(int numero){
+            boolean gano;
+            if (esPrimo(numero)) {
+                gano = true;
+                System.out.println("Enhorabuena, has ganado un granizado gratis en Freeze Brain.");
+            } else if (sumaDivisoresPrimos(numero) > 10){
+                gano = true;
+                System.out.println("Felicidades, has ganado dos menús de La Super Plaza.");
+            }else {
+                gano = false;
+            }
+            return gano;
+      }
+    
     /**
      * Función que pregunta si se desea volver al menú principal o salir de la app
      * @return devuelve true si se quiere seguir o false si no se quiere.
