@@ -206,7 +206,7 @@ public class Ejercicio4 {
      */
 
     public static int sumaDivisoresPrimos(int numero){
-        int suma;
+        int suma = 0;
         for (int i = 1; i <= numero; i++){
             if (numero % i == 0){
                 if (esPrimo(i)){
@@ -215,6 +215,29 @@ public class Ejercicio4 {
             }
         }
         return suma;
+    }
+
+    /**
+     * Funcion que dice si ha tocado un premio u otro o ninguno
+     * @param numero numero del sorteo
+     * @return devuelve true si es premiado o false si no es premiado
+     */
+
+    public static boolean premio(int numero){
+        boolean esPremio;
+
+        if (esPrimo(numero)){
+            esPremio = true;
+            System.out.println("Enhorabuena, has ganado un granizado gratis en Freeze Brain.");
+        }else if (sumaDivisoresPrimos(numero) > 10) {
+            esPremio = true;
+            System.out.println("Felicidades, has ganado dos menús de La Super Plaza");
+        }else{
+            esPremio = false;
+            System.out.println("Inténtalo de nuevo.");
+        }
+
+        return esPremio;
     }
 
     /**
@@ -230,7 +253,6 @@ public class Ejercicio4 {
         do {
             System.out.println("\nDesea volver al menú de opciones (S) o salir (N)");
             continuar = sc.next().toUpperCase().charAt(0);
-
 
             if (continuar == 'S') {
                 seguir = true;
@@ -249,7 +271,7 @@ public class Ejercicio4 {
 
     /**
      * Funcion que imprime el importe total en función de lo que
-     * escoja el usuario, si decide que si, se imprimo, si decide que no, no se imprime
+     * escoja el usuario, si decide que si, se imprime, si decide que no, no se imprime
      * @param total el total de las entradas compradas
      */
 
@@ -277,6 +299,85 @@ public class Ejercicio4 {
 
     }
 
+    /**
+     * Función para quitar carga al main que corresponde al menú de opciones, en esta función el usuario podrá escoger
+     * la opción que desea del menú, y se realizarán los múltiples cálculos y funciones
+     * @param opcion opción introducida por el usuario
+     * @return devuelve booleano de si el usuario desea continuar o no, si desea continuar devuelve true y si no false
+     */
+
+    public static boolean Menuopciones (int opcion){
+        boolean continuar = false;
+        Scanner sc = new Scanner(System.in);
+        int mes;
+
+
+        switch (opcion) {
+            case 1 -> {
+                mostrarAtracciones();
+                continuar = seguirEnPrograma();
+            }
+            case 2 -> {
+                mostrarRestaurantes();
+                continuar = seguirEnPrograma();
+            }
+            case 3 -> {
+                do {
+                    System.out.println("Introduce el mes: ");
+                    mes = sc.nextInt();
+                    if (mes < 1 || mes > 12) {
+                        System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
+                    } else {
+                        numeroAleatorio(cantidadDeDias(mes));
+                        diasDisponibles(mes);
+                    }
+
+                } while (mes < 1 || mes > 12);
+                continuar = seguirEnPrograma();
+            }
+            case 4 -> {
+                mostrarPrecios();
+                System.out.println("Dime la cantidad de entradas reducidas: ");
+                int reducida = sc.nextInt();
+                System.out.println("Dime la cantidad de entradas generales: ");
+                int generales = sc.nextInt();
+                double total = calcularImporte(reducida, generales);
+                int descuento = descuentoAsociado(total);
+                double aplicarDescuento = aplicarDescuento(total, descuento);
+
+                consultarImporte(total);
+                System.out.println("Aplicable descuento del " + descuento + "%");
+                System.out.println("Importe Final: " + aplicarDescuento);
+                continuar = seguirEnPrograma();
+
+            }
+            case 5 -> {
+                int numPremio;
+                int contador = 0;
+                boolean esPremio;
+                do {
+                    System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
+                    numPremio = sc.nextInt();
+                    esPremio = premio(numPremio);
+                    if (!esPremio) {
+                        contador++;
+                    }
+                }
+                while (contador < 3 && !esPremio);
+                continuar = seguirEnPrograma();
+
+            }
+            case 6 -> System.out.println("\nHasta pronto :D");
+            default -> {
+                System.out.println("\nOpción no disponible... Vuelva a intentarlo.");
+                continuar = seguirEnPrograma();
+            }
+        }
+
+        return continuar;
+
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Registrate en nuestra app para acceder al parque de atracciones");
@@ -298,70 +399,14 @@ public class Ejercicio4 {
 
         } while (login(usuario, user, password, pssww));
 
-
         int opcion;
-
         boolean continuar = false;
         do {
             mostrarMenuOpciones();
             System.out.println("Escribe la opción que deseas: ");
             opcion = sc.nextInt();
-            int mes;
 
-            switch (opcion) {
-                case 1 -> {
-                    mostrarAtracciones();
-                    continuar = seguirEnPrograma();
-                }
-                case 2 -> {
-                    mostrarRestaurantes();
-                    continuar = seguirEnPrograma();
-                }
-                case 3 -> {
-                    do {
-                        System.out.println("Introduce el mes: ");
-                        mes = sc.nextInt();
-                        if (mes < 1 || mes > 12){
-                            System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
-                        }else{
-                            numeroAleatorio(cantidadDeDias(mes));
-                            diasDisponibles(mes);
-                        }
-
-                    }while(mes < 1 || mes > 12);
-                    continuar = seguirEnPrograma();
-                }
-                case 4 -> {
-                    mostrarPrecios();
-                    System.out.println("Dime la cantidad de entradas reducidas: ");
-                    int reducida = sc.nextInt();
-                    System.out.println("Dime la cantidad de entradas generales: ");
-                    int generales = sc.nextInt();
-                    double total = calcularImporte(reducida, generales);
-                    int descuento = descuentoAsociado(total);
-                    double aplicarDescuento = aplicarDescuento(total, descuento);
-
-                    consultarImporte(total);
-                    System.out.println("Aplicable descuento del " + descuento + "%");
-                    System.out.println("Importe Final: " + aplicarDescuento);
-                    continuar = seguirEnPrograma();
-
-                }
-                case 5 -> {
-                    int numPremio;
-                    System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
-                    numPremio = sc.nextInt();
-                    System.out.println(esPrimo(numPremio));
-                    System.out.println(sumaDivisoresPrimos(numPremio));
-                    continuar = seguirEnPrograma();
-
-                }
-                case 6 -> System.out.println("\nHasta pronto :D");
-                default -> {
-                    System.out.println("\nOpción no disponible... Vuelva a intentarlo.");
-                    continuar = seguirEnPrograma();
-                }
-            }
+            continuar = Menuopciones(opcion);
 
         } while (opcion != 6 && continuar);
 
