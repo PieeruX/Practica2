@@ -315,6 +315,7 @@ public static boolean premio(int numero){
         int opcion;
 
         boolean continuar = false;
+        boolean opcionCinco = false;
         do {
             mostrarMenuOpciones();
             System.out.println("Escribe la opción que deseas: ");
@@ -361,13 +362,24 @@ public static boolean premio(int numero){
 
                 }
                 case 5 -> {
-                    int numPremio;
-                    System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
-                    numPremio = sc.nextInt();
-                    System.out.println(esPrimo(numPremio));
-                    System.out.println(sumaDivisoresPrimos(numPremio));
-                    continuar = seguirEnPrograma();
-
+                     int numPremio;
+                    if (opcionCinco == false){
+                         for (int i = 1; i <= 3; i++){
+                             System.out.println("Introduce el número que quieras y podras ganar un premio: ");
+                             numPremio = sc.nextInt();
+                             if (premio(numPremio)){
+                                 i = 3;
+                             }else if (i <= 2){
+                                 System.out.println("Intentalo de nuevo.");
+                             }else {
+                                 System.out.println("Otra vez sera");
+                             }
+                         }
+                         opcionCinco = true;
+                    } else {
+                        System.out.println("Ya has participado en el sorteo.");
+                    }
+                     continuar = seguirEnPrograma();
                 }
                 case 6 -> System.out.println("\nHasta pronto :D");
                 default -> {
