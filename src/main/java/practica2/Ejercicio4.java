@@ -199,6 +199,24 @@ public class Ejercicio4 {
     }
 
     /**
+     *
+     * @param numero
+     * @return
+     */
+
+    public static int sumaDivisoresPrimos(int numero){
+        int suma;
+        for (int i = 1; i <= numero; i++){
+            if (numero % i == 0){
+                if (esPrimo(i)){
+                    suma+= i;
+                }
+            }
+        }
+        return suma;
+    }
+
+    /**
      * Función que pregunta si se desea volver al menú principal o salir de la app
      * @return devuelve true si se quiere seguir o false si no se quiere.
      */
@@ -333,7 +351,9 @@ public class Ejercicio4 {
                     System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
                     numPremio = sc.nextInt();
                     System.out.println(esPrimo(numPremio));
+                    System.out.println(sumaDivisoresPrimos(numPremio));
                     continuar = seguirEnPrograma();
+
                 }
                 case 6 -> System.out.println("\nHasta pronto :D");
                 default -> {
