@@ -3,7 +3,7 @@ package practica2;
 import java.util.Scanner;
 
 /**
- * Programa que simula una app de un parque de atracciones
+ * Programa que simula una app de un parque de atracciones, contiene menú de elección de opciones
  * @author Piera Merlo
  * @author Javier Viloria
  */
@@ -47,6 +47,75 @@ public class Ejercicio4 {
     /**
      * Función de la opción 1 que muestra las atracciones
      */
+
+    /**
+     * Función menú de opciones, en esta función el usuario podrá escoger
+     * la opción que desea del menú, y se realizarán los múltiples cálculos y funciones que este contiene.
+     * @param opcion opción introducida por el usuario
+     * @return devuelve booleano de si el usuario desea continuar en el menú o no, si desea continuar
+     * devuelve true y si no false
+     */
+
+    public static boolean escogerOpcione(int opcion){
+        boolean continuar = false;
+        Scanner sc = new Scanner(System.in);
+        int mes;
+
+        switch (opcion) {
+            case 1 -> {
+                mostrarAtracciones();
+                continuar = seguirEnPrograma();
+            }
+            case 2 -> {
+                mostrarRestaurantes();
+                continuar = seguirEnPrograma();
+            }
+            case 3 -> {
+                do {
+                    System.out.println("Introduce el mes: ");
+                    mes = sc.nextInt();
+                    if (mes < 1 || mes > 12) {
+                        System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
+                    } else {
+                        numeroAleatorio(cantidadDeDias(mes));
+                        diasDisponibles(mes);
+                    }
+
+                } while (mes < 1 || mes > 12);
+                continuar = seguirEnPrograma();
+            }
+            case 4 -> {
+                mostrarPrecios();
+                compraValida();
+                continuar = seguirEnPrograma();
+
+            }
+            case 5 -> {
+                int numPremio;
+                int contador = 0;
+                boolean esPremio;
+                do {
+                    System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
+                    numPremio = sc.nextInt();
+                    esPremio = premio(numPremio);
+                    if (!esPremio) {
+                        contador++;
+                    }
+                }
+                while (contador < 3 && !esPremio);
+                continuar = seguirEnPrograma();
+
+            }
+            case 6 -> System.out.println("\nHasta pronto :D");
+            default -> {
+                System.out.println("\nOpción no disponible... Vuelva a intentarlo.");
+                continuar = seguirEnPrograma();
+            }
+        }
+
+        return continuar;
+
+    }
 
     public static void mostrarAtracciones(){
 
@@ -129,6 +198,54 @@ public class Ejercicio4 {
     }
 
     /**
+     *Función que pide cantidad de entradas y verifica que la compra sea correcta
+     */
+
+    public static void compraValida(){
+        Scanner sc = new Scanner(System.in);
+        char seguir;
+        boolean compraValida = false;
+        double total = 0, aplicarDescuento = 0;
+        int descuento = 0;
+
+        do{
+            System.out.println("Dime la cantidad de entradas reducidas: ");
+            int reducida = sc.nextInt();
+            System.out.println("Dime la cantidad de entradas generales: ");
+            int generales = sc.nextInt();
+
+            if (reducida < 0 || generales < 0 || reducida == 0 && generales ==0 ) {
+                System.out.println("Datos no válidos. No has realizado ninguna compra.");
+
+                do {
+                    System.out.println("¿Desea seguir comprando? (S/N)");
+                    seguir = sc.next().charAt(0);
+                    seguir = Character.toUpperCase(seguir);
+                } while (seguir != 'S' && seguir != 'N');
+
+                if (seguir == 'S') {
+                    compraValida = false;
+
+                } else {
+                    System.out.println("No has realizado ninguna compra");
+                    compraValida = true;
+                }
+
+            }else{
+                total = calcularImporte(reducida, generales);
+                descuento = descuentoAsociado(total);
+                aplicarDescuento = aplicarDescuento(total, descuento);
+                consultarImporte(total);
+                System.out.println("Aplicable descuento del " + descuento + "%");
+                System.out.printf("Importe Final: %.2f€",aplicarDescuento);
+                compraValida = true;
+            }
+
+        }while (!compraValida);
+
+    }
+
+    /**
      * Función que calcula el importe total de todas las entradas escogidas
      * @param entradaReducida cantidad de entradas reducidas escogidas
      * @param entradaGeneral cantidad de entradas generales escogidas
@@ -141,6 +258,36 @@ public class Ejercicio4 {
 
         return importeTotal;
     }
+    /**
+     * Funcion que imprime el importe total en función de lo que
+     * escoja el usuario, si decide que si, se imprime, si decide que no, no se imprime
+     * @param total el total de las entradas compradas
+     */
+
+    public static void consultarImporte(double total){
+        Scanner sc = new Scanner(System.in);
+        char verDescuento;
+        boolean respuestaIncorrecta = true;
+        do {
+            System.out.println("Deseas consultar cuál será el importe en función " +
+                    "del número de entradas (S/N): ");
+            verDescuento = sc.next().toUpperCase().charAt(0);
+
+            if (verDescuento == 'S') {
+                System.out.printf("Importe total: %.2f€\n", total);
+                respuestaIncorrecta = false;
+
+            } else if (verDescuento == 'N') {
+                respuestaIncorrecta = false;
+
+            }else {
+                System.out.println("Introduce S/N, por favor");
+            }
+
+        }while(respuestaIncorrecta);
+    }
+
+
 
     /**
      * Función que da un descuento al usuario dependiendo del importe total que han de pagar
@@ -189,7 +336,7 @@ public class Ejercicio4 {
             primo = false; // Los números menor o igual a 1 no son primos
         }else{
             //Sacamos la raíz cuadrada del número para que el código sea más eficiente
-            // y no recorra números de más, solo el número de su raíz cuadrada acortando el rango del bucle.
+            // y no recorra números de más, solo el número de su raíz cuadrada y así acortamos el rango del bucle.
             for( int i = 2; i <= Math.sqrt(numero); i++){
                 if (numero % i == 0){ // Si el numero tiene divisor no es primo
                     primo = false;
@@ -200,9 +347,9 @@ public class Ejercicio4 {
     }
 
     /**
-     *
-     * @param numero
-     * @return
+     * Funcion que suma los divisores de un número si son primos, si no son primos no los suma
+     * @param numero numero de sorteo introducido
+     * @return devuelve la suma de los divisores primos
      */
 
     public static int sumaDivisoresPrimos(int numero){
@@ -257,7 +404,11 @@ public class Ejercicio4 {
             if (continuar == 'S') {
                 seguir = true;
             } else if (continuar == 'N') {
-                System.out.println("\nHasta pronto :D ");
+                System.out.println("Desconectando...");
+                System.out.println("      |\\      _,,,---,,_\n" +
+                        "ZZZzz /,`.-'`'    -.  ;-;;,_\n" +
+                        "     |,4-  ) )-,_. ,\\ (  `'-'\n" +
+                        "    '---''(_/--'  `-'\\_)  ...nos vemos pronto :D ");
             } else {
                 System.out.println("\nDame una respuesta correcta");
                 seguirBucle = true;
@@ -266,121 +417,20 @@ public class Ejercicio4 {
         } while (seguirBucle);
 
         return seguir;
-
     }
 
-    /**
-     * Funcion que imprime el importe total en función de lo que
-     * escoja el usuario, si decide que si, se imprime, si decide que no, no se imprime
-     * @param total el total de las entradas compradas
-     */
 
-    public static void consultarImporte(double total){
-        Scanner sc = new Scanner(System.in);
-        char verDescuento;
-        boolean respuestaIncorrecta = true;
-        do {
-            System.out.println("Deseas consultar cuál será el importe en función " +
-                    "del número de entradas (S/N): ");
-            verDescuento = sc.next().toUpperCase().charAt(0);
-
-            if (verDescuento == 'S') {
-                System.out.println("Importe total: " + total);
-                respuestaIncorrecta = false;
-
-            } else if (verDescuento == 'N') {
-                respuestaIncorrecta = false;
-
-            }else {
-                System.out.println("Introduce S/N, por favor");
-            }
-
-        }while(respuestaIncorrecta);
-
-    }
-
-    /**
-     * Función para quitar carga al main que corresponde al menú de opciones, en esta función el usuario podrá escoger
-     * la opción que desea del menú, y se realizarán los múltiples cálculos y funciones
-     * @param opcion opción introducida por el usuario
-     * @return devuelve booleano de si el usuario desea continuar o no, si desea continuar devuelve true y si no false
-     */
-
-    public static boolean Menuopciones (int opcion){
-        boolean continuar = false;
-        Scanner sc = new Scanner(System.in);
-        int mes;
-
-
-        switch (opcion) {
-            case 1 -> {
-                mostrarAtracciones();
-                continuar = seguirEnPrograma();
-            }
-            case 2 -> {
-                mostrarRestaurantes();
-                continuar = seguirEnPrograma();
-            }
-            case 3 -> {
-                do {
-                    System.out.println("Introduce el mes: ");
-                    mes = sc.nextInt();
-                    if (mes < 1 || mes > 12) {
-                        System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
-                    } else {
-                        numeroAleatorio(cantidadDeDias(mes));
-                        diasDisponibles(mes);
-                    }
-
-                } while (mes < 1 || mes > 12);
-                continuar = seguirEnPrograma();
-            }
-            case 4 -> {
-                mostrarPrecios();
-                System.out.println("Dime la cantidad de entradas reducidas: ");
-                int reducida = sc.nextInt();
-                System.out.println("Dime la cantidad de entradas generales: ");
-                int generales = sc.nextInt();
-                double total = calcularImporte(reducida, generales);
-                int descuento = descuentoAsociado(total);
-                double aplicarDescuento = aplicarDescuento(total, descuento);
-
-                consultarImporte(total);
-                System.out.println("Aplicable descuento del " + descuento + "%");
-                System.out.println("Importe Final: " + aplicarDescuento);
-                continuar = seguirEnPrograma();
-
-            }
-            case 5 -> {
-                int numPremio;
-                int contador = 0;
-                boolean esPremio;
-                do {
-                    System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
-                    numPremio = sc.nextInt();
-                    esPremio = premio(numPremio);
-                    if (!esPremio) {
-                        contador++;
-                    }
-                }
-                while (contador < 3 && !esPremio);
-                continuar = seguirEnPrograma();
-
-            }
-            case 6 -> System.out.println("\nHasta pronto :D");
-            default -> {
-                System.out.println("\nOpción no disponible... Vuelva a intentarlo.");
-                continuar = seguirEnPrograma();
-            }
-        }
-
-        return continuar;
-
-    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Registrate en nuestra app para acceder al parque de atracciones");
+        System.out.println("¡Bienvenido/a a nuestra app del parque de atracciones!");
+        System.out.println("  /\\_/\\  (\n" +
+                " ( ^.^ ) _)\n" +
+                "   \\\"/  (\n" +
+                " ( | | )\n" +
+                "(__d b__)");
+        System.out.println("Registrate en nuestra app para acceder al parque de atracciones y " +
+                "descubrir todo lo que ofrecemos");
 
         System.out.println("Establece un usuario: ");
         String usuario = sc.nextLine();
@@ -406,7 +456,7 @@ public class Ejercicio4 {
             System.out.println("Escribe la opción que deseas: ");
             opcion = sc.nextInt();
 
-            continuar = Menuopciones(opcion);
+            continuar = escogerOpcione(opcion);
 
         } while (opcion != 6 && continuar);
 
