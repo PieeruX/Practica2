@@ -212,6 +212,9 @@ public class Ejercicio4 {
         boolean compraValida = false;
         double total = 0, aplicarDescuento = 0;
         int descuento = 0;
+        System.out.println("Deseas consultar cuál será el importe en función " +
+                "del número de entradas (S/N): ");
+        char verDescuento = sc.next().toUpperCase().charAt(0);
 
         do{
             System.out.println("Dime la cantidad de entradas reducidas: ");
@@ -226,24 +229,28 @@ public class Ejercicio4 {
                     System.out.println("¿Desea seguir comprando? (S/N)");
                     seguir = sc.next().charAt(0);
                     seguir = Character.toUpperCase(seguir);
-                } while (seguir != 'S' && seguir != 'N');
+                } while (seguir != 'S' && seguir != 'N'); //solo saldremos del bucle cuando se escriba 's' o 'n'
 
-                if (seguir == 'S') {
-                    compraValida = false;
-
-                } else {
-                    System.out.println("No has realizado ninguna compra");
-                    compraValida = true;
-                }
+                if (seguir == 'N') { //si es 'N', saldremos del bucle sin hacer cálculos
+                    System.out.println("No has realizado ninguna compra.");
+                    compraValida = true; // Salimos del bucle
+                } //no pongo else, ya que la otra opción sí o sí será 's' y compraValida seguirá en false y
+                // el codigo seguirá a las siguientes líneas
 
             }else{
+                //Calculos de importe y descuentos a través de las funciones
                 total = calcularImporte(reducida, generales);
                 descuento = descuentoAsociado(total);
                 aplicarDescuento = aplicarDescuento(total, descuento);
-                consultarImporte(total);
+
+                if (consultarImporte(verDescuento)){
+                    //Si la respuesta es true ('s'), entonces imprimimos el importe total, sino, no se imprime
+                    System.out.printf("Importe total: %.2f€\n", total);
+                }
                 System.out.println("Aplicable descuento del " + descuento + "%");
                 System.out.printf("Importe Final: %.2f€",aplicarDescuento);
-                compraValida = true;
+                compraValida = true; //salimos del bucle
+
             }
 
         }while (!compraValida);
@@ -263,33 +270,33 @@ public class Ejercicio4 {
 
         return importeTotal;
     }
+
     /**
-     * Funcion que imprime el importe total en función de lo que
-     * escoja el usuario, si decide que si, se imprime, si decide que no, no se imprime
-     * @param total el total de las entradas compradas
+     * Función que según la respuesta que de el usuario se visualizará o no el importe
+     * @param respuesta respuesta que esocge el usuario para decidir si ver o no el importe
+     * @return devuelve true si decide que si o false si decide que no
      */
 
-    public static void consultarImporte(double total){
-        Scanner sc = new Scanner(System.in);
-        char verDescuento;
+    public static boolean consultarImporte(char respuesta){
         boolean respuestaIncorrecta = true;
+        boolean verDescuento = true;
         do {
-            System.out.println("Deseas consultar cuál será el importe en función " +
-                    "del número de entradas (S/N): ");
-            verDescuento = sc.next().toUpperCase().charAt(0);
 
-            if (verDescuento == 'S') {
-                System.out.printf("Importe total: %.2f€\n", total);
+            if (respuesta == 'S') {
                 respuestaIncorrecta = false;
+                verDescuento = true;
 
-            } else if (verDescuento == 'N') {
+            } else if (respuesta == 'N') {
                 respuestaIncorrecta = false;
+                verDescuento = false;
 
             }else {
                 System.out.println("Introduce S/N, por favor");
             }
 
         }while(respuestaIncorrecta);
+
+        return verDescuento;
     }
 
 
