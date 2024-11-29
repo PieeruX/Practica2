@@ -42,6 +42,34 @@ public class Ejercicio3 {
         }
         pintarRepetido(letra, longitud); //Última línea
     }
+    /**
+     * Función que pregunta si se desea volver a dibujar un cuadrado o salir del programa
+     * @return devuelve true si se quiere pintar un cuadro nuevo o false si no se quiere.
+     */
+
+    public static boolean seguirEnPrograma() {
+        Scanner sc = new Scanner(System.in);
+        char continuar;
+        boolean seguirBucle = false;
+        boolean seguir = false;
+
+        do {
+            System.out.println("¿Quieres pintar otro cuadrado? S/N");
+            continuar = sc.next().toUpperCase().charAt(0);
+
+            if (continuar == 'S') {
+                seguir = true;
+            } else if (continuar == 'N') {
+                System.out.println("\nFin programa ");
+            } else {
+                System.out.println("\nDame una respuesta que sea S/N");
+                seguirBucle = true;
+            }
+
+        } while (seguirBucle);
+
+        return seguir;
+    }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
@@ -59,9 +87,7 @@ public class Ejercicio3 {
             letra = sc.next().charAt(0);
             cuadradoHueco(letra, base);
 
-            System.out.println("¿Quieres pintar otro cuadrado? S/N");
-            seguir = sc.next().charAt(0);
-        }while (seguir == 'S' || seguir == 's');
+        }while (seguirEnPrograma());
 
     }
 
