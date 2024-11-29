@@ -106,7 +106,12 @@ public class Ejercicio4 {
                 continuar = seguirEnPrograma();
 
             }
-            case 6 -> System.out.println("\nHasta pronto :D");
+            case 6 -> { System.out.println("Desconectando...");
+            System.out.println("      |\\      _,,,---,,_\n" +
+                    "ZZZzz /,`.-'`'    -.  ;-;;,_\n" +
+                    "     |,4-  ) )-,_. ,\\ (  `'-'\n" +
+                    "    '---''(_/--'  `-'\\_)  ...nos vemos pronto :D ");
+            }
             default -> {
                 System.out.println("\nOpción no disponible... Vuelva a intentarlo.");
                 continuar = seguirEnPrograma();
@@ -423,13 +428,13 @@ public class Ejercicio4 {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("¡Bienvenido/a a nuestra app del parque de atracciones!");
+        System.out.println("¡Bienvenido/a a nuestra aplicación del parque de atracciones!");
         System.out.println("  /\\_/\\  (\n" +
                 " ( ^.^ ) _)\n" +
                 "   \\\"/  (\n" +
                 " ( | | )\n" +
                 "(__d b__)");
-        System.out.println("Registrate en nuestra app para acceder al parque de atracciones y " +
+        System.out.println("Regístrate en nuestra aplicación para acceder al parque de atracciones y " +
                 "descubrir todo lo que ofrecemos");
 
         System.out.println("Establece un usuario: ");
