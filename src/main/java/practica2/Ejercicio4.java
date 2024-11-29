@@ -71,6 +71,7 @@ public class Ejercicio4 {
                 continuar = seguirEnPrograma();
             }
             case 3 -> {
+                // bucle para introducir los meses de forma correcta
                 do {
                     System.out.println("Introduce el mes: ");
                     mes = sc.nextInt();
@@ -94,6 +95,7 @@ public class Ejercicio4 {
                 int numPremio;
                 int contador = 0;
                 boolean esPremio;
+                //bucle contador de intentos de ganar premio, si supera 3 veces se va del bucle y no puede participar más
                 do {
                     System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
                     numPremio = sc.nextInt();
@@ -101,8 +103,7 @@ public class Ejercicio4 {
                     if (!esPremio) {
                         contador++;
                     }
-                }
-                while (contador < 3 && !esPremio);
+                } while (contador < 3 && !esPremio);
                 continuar = seguirEnPrograma();
 
             }
@@ -203,6 +204,20 @@ public class Ejercicio4 {
     }
 
     /**
+     * Funcion que imprime o no el importe total de las entradas en función de los parámetros de entrada escogidos.
+     * @param verDescuento caracter de 's' si muestra importe, caracter 'n' no lo muestra
+     * @param total cantidad total del precio de las entradas
+     */
+
+    public static void verNoverImporte(char verDescuento, double total) {
+        if (consultarImporte(verDescuento)){
+            //Si la respuesta es true ('s'), entonces imprimimos el importe total, sino, no se imprime
+            System.out.printf("Importe total: %.2f€\n", total);
+        }
+
+    }
+
+    /**
      *Función que pide cantidad de entradas y verifica que la compra sea correcta
      */
 
@@ -242,17 +257,11 @@ public class Ejercicio4 {
                 total = calcularImporte(reducida, generales);
                 descuento = descuentoAsociado(total);
                 aplicarDescuento = aplicarDescuento(total, descuento);
-
-                if (consultarImporte(verDescuento)){
-                    //Si la respuesta es true ('s'), entonces imprimimos el importe total, sino, no se imprime
-                    System.out.printf("Importe total: %.2f€\n", total);
-                }
+                verNoverImporte(verDescuento, total);
                 System.out.println("Aplicable descuento del " + descuento + "%");
                 System.out.printf("Importe Final: %.2f€",aplicarDescuento);
                 compraValida = true; //salimos del bucle
-
             }
-
         }while (!compraValida);
 
     }
@@ -366,10 +375,11 @@ public class Ejercicio4 {
 
     public static int sumaDivisoresPrimos(int numero){
         int suma = 0;
+
         for (int i = 1; i <= numero; i++){
-            if (numero % i == 0){
-                if (esPrimo(i)){
-                    suma+= i;
+            if (numero % i == 0){ //si número introducido es divisible por i (número que itera)
+                if (esPrimo(i)){ //se compara si ese número por el que es divisible es primo
+                    suma+= i;// si es primo se suma
                 }
             }
         }
@@ -468,6 +478,7 @@ public class Ejercicio4 {
             System.out.println("Escribe la opción que deseas: ");
             opcion = sc.nextInt();
 
+            //mostramos el menú opciones que devolverá true o false para continuar en el bucle o no
             continuar = escogerOpcione(opcion);
 
         } while (opcion != 6 && continuar);
