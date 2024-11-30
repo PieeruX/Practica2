@@ -61,6 +61,7 @@ public class Ejercicio3 {
                 seguir = true;
             } else if (continuar == 'N') {
                 System.out.println("\nFin programa ");
+                seguirBucle = false;
             } else {
                 System.out.println("\nDame una respuesta que sea S/N");
                 seguirBucle = true;

@@ -340,7 +340,7 @@ public class Ejercicio4 {
         boolean seguir = false;
 
         do {
-            System.out.println("\nDesea volver al menú de opciones (S) o salir (N)");
+            System.out.println("Desea volver al menú de opciones (S) o salir (N)");
             continuar = sc.next().toUpperCase().charAt(0);
 
             if (continuar == 'S') {
@@ -354,7 +354,7 @@ public class Ejercicio4 {
                         "    '---''(_/--'  `-'\\_)  ...nos vemos pronto :D ");
                 seguirBucle = false;
             } else {
-                System.out.println("\nDame una respuesta correcta (S/N)");
+                System.out.println("Dame una respuesta correcta (S/N)");
                 seguirBucle = true;
             }
 
