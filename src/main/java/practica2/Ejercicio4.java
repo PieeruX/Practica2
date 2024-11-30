@@ -439,13 +439,13 @@ public class Ejercicio4 {
                 case 5 -> {
                     int numPremio;
                     if (!opcionCinco) {
-                        for (int i = 1; i <= 3; i++) {
+                        for (int i = 1; i <= 3; i++) { // tres intentos para acertar con un número
                             System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
                             numPremio = sc.nextInt();
 
-                            if (premio(numPremio)) {
+                            if (premio(numPremio)) { //si acierta, i = 3, para salir del bucle
                                 i = 3;
-                            } else if (i <= 2) {
+                            } else if (i <= 2) { //si no acierta, debe intentarlo de nuevo 2 veces más
                                 System.out.println("Inténtalo de nuevo.");
                             }else{
                                 System.out.println("Otra vez será.");
@@ -473,3 +473,4 @@ public class Ejercicio4 {
 
 
     }
+}
