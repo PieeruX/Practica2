@@ -133,20 +133,6 @@ public class Ejercicio4 {
     }
 
     /**
-     * Funcion que imprime o no el importe total de las entradas en función de los parámetros de entrada escogidos.
-     * @param verImporte caracter de 's' si muestra importe, caracter 'n' no lo muestra
-     * @param total cantidad total del precio de las entradas
-     */
-
-    public static void verNoverImporte(boolean verImporte, double total) {
-        if (verImporte){
-            //Si la respuesta es true ('s'), entonces imprimimos el importe total, sino, no se imprime
-            System.out.printf("Importe total: %.2f€\n", total);
-        }
-
-    }
-
-    /**
      *Función que pide cantidad de entradas y verifica que la compra sea correcta
      */
 
@@ -185,9 +171,12 @@ public class Ejercicio4 {
                 total = calcularImporte(reducida, generales);
                 descuento = descuentoAsociado(total);
                 aplicarDescuento = aplicarDescuento(total, descuento);
-                verNoverImporte(verImporte, total);
-                System.out.printf("Aplicable descuento del " + descuento + "%");
-                System.out.printf("Importe Final: %.2f€",aplicarDescuento);
+                if (verImporte){
+                    //Si la respuesta es true ('s'), entonces imprimimos el importe total, sino, no se imprime
+                    System.out.printf("Importe total: %.2f€\n", total);
+                }
+                System.out.println("Aplicable descuento del " + descuento + "%");
+                System.out.printf("Importe Final: %.2f€\n",aplicarDescuento);
                 compraValida = true; //salimos del bucle
             }
         }while (!compraValida);
@@ -365,7 +354,7 @@ public class Ejercicio4 {
                         "    '---''(_/--'  `-'\\_)  ...nos vemos pronto :D ");
                 seguirBucle = false;
             } else {
-                System.out.println("\nDame una respuesta correcta");
+                System.out.println("\nDame una respuesta correcta (S/N)");
                 seguirBucle = true;
             }
 
