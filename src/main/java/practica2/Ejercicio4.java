@@ -9,6 +9,7 @@ import java.util.Scanner;
  */
 
 public class Ejercicio4 {
+
     /**
      * Función que comprueba que usuario y contraseña sean correctas
      * @param usuarioReal primer usuario introducido por teclado
@@ -44,84 +45,12 @@ public class Ejercicio4 {
                 "6. Salir de la aplicación");
     }
 
+
+
+
     /**
      * Función de la opción 1 que muestra las atracciones
      */
-
-    /**
-     * Función menú de opciones, en esta función el usuario podrá escoger
-     * la opción que desea del menú, y se realizarán los múltiples cálculos y funciones que este contiene.
-     * @param opcion opción introducida por el usuario
-     * @return devuelve booleano de si el usuario desea continuar en el menú o no, si desea continuar
-     * devuelve true y si no false
-     */
-
-    public static boolean escogerOpcione(int opcion){
-        boolean continuar = false;
-        Scanner sc = new Scanner(System.in);
-        int mes;
-
-        switch (opcion) {
-            case 1 -> {
-                mostrarAtracciones();
-                continuar = seguirEnPrograma();
-            }
-            case 2 -> {
-                mostrarRestaurantes();
-                continuar = seguirEnPrograma();
-            }
-            case 3 -> {
-                // bucle para introducir los meses de forma correcta
-                do {
-                    System.out.println("Introduce el mes: ");
-                    mes = sc.nextInt();
-                    if (mes < 1 || mes > 12) {
-                        System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
-                    } else {
-                        numeroAleatorio(cantidadDeDias(mes));
-                        diasDisponibles(mes);
-                    }
-
-                } while (mes < 1 || mes > 12);
-                continuar = seguirEnPrograma();
-            }
-            case 4 -> {
-                mostrarPrecios();
-                compraValida();
-                continuar = seguirEnPrograma();
-
-            }
-            case 5 -> {
-                int numPremio;
-                int contador = 0;
-                boolean esPremio;
-                //bucle contador de intentos de ganar premio, si supera 3 veces se va del bucle y no puede participar más
-                do {
-                    System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
-                    numPremio = sc.nextInt();
-                    esPremio = premio(numPremio);
-                    if (!esPremio) {
-                        contador++;
-                    }
-                } while (contador < 3 && !esPremio);
-                continuar = seguirEnPrograma();
-
-            }
-            case 6 -> { System.out.println("Desconectando...");
-            System.out.println("      |\\      _,,,---,,_\n" +
-                    "ZZZzz /,`.-'`'    -.  ;-;;,_\n" +
-                    "     |,4-  ) )-,_. ,\\ (  `'-'\n" +
-                    "    '---''(_/--'  `-'\\_)  ...nos vemos pronto :D ");
-            }
-            default -> {
-                System.out.println("\nOpción no disponible... Vuelva a intentarlo.");
-                continuar = seguirEnPrograma();
-            }
-        }
-
-        return continuar;
-
-    }
 
     public static void mostrarAtracciones(){
 
@@ -187,11 +116,11 @@ public class Ejercicio4 {
      */
 
     public static void diasDisponibles(int mes){
-       int disponible =  (int) (Math.random() * 10) + 1;
+        int disponible =  (int) (Math.random() * 10) + 1;
         System.out.println("Días disponibles del mes " + mes);
-       for (int i = 1; i <= disponible; i++){
-           System.out.print(numeroAleatorio(disponible) + " ");
-       }
+        for (int i = 1; i <= disponible; i++){
+            System.out.print(numeroAleatorio(disponible) + " ");
+        }
     }
 
     /**
@@ -257,7 +186,7 @@ public class Ejercicio4 {
                 descuento = descuentoAsociado(total);
                 aplicarDescuento = aplicarDescuento(total, descuento);
                 verNoverImporte(verImporte, total);
-                System.out.println("Aplicable descuento del " + descuento + "%");
+                System.out.printf("Aplicable descuento del " + descuento + "%");
                 System.out.printf("Importe Final: %.2f€",aplicarDescuento);
                 compraValida = true; //salimos del bucle
             }
@@ -271,7 +200,7 @@ public class Ejercicio4 {
      * @param entradaGeneral cantidad de entradas generales escogidas
      * @return devuelve el total de la operación de calcular todas las entradas
      */
-        //Corregir error si se introduce números negativos de entradas o no se escoge ninguna
+    //Corregir error si se introduce números negativos de entradas o no se escoge ninguna
     public static double calcularImporte(int entradaReducida, int entradaGeneral){
         final double GENERAL = 39.90, REDUCIDA = 29.90;
         double importeTotal = (entradaReducida * REDUCIDA) + (entradaGeneral * GENERAL);
@@ -343,7 +272,7 @@ public class Ejercicio4 {
 
     public static double aplicarDescuento(double importe, int descuento){
         double importeTotal = 0;
-         importeTotal = importe - (importe * descuento / 100);
+        importeTotal = importe - (importe * descuento / 100);
         return importeTotal;
 
     }
@@ -406,7 +335,6 @@ public class Ejercicio4 {
             System.out.println("Felicidades, has ganado dos menús de La Super Plaza");
         }else{
             esPremio = false;
-            System.out.println("Inténtalo de nuevo.");
         }
 
         return esPremio;
@@ -428,12 +356,14 @@ public class Ejercicio4 {
 
             if (continuar == 'S') {
                 seguir = true;
+                seguirBucle = false;
             } else if (continuar == 'N') {
                 System.out.println("Desconectando...");
                 System.out.println("      |\\      _,,,---,,_\n" +
                         "ZZZzz /,`.-'`'    -.  ;-;;,_\n" +
                         "     |,4-  ) )-,_. ,\\ (  `'-'\n" +
                         "    '---''(_/--'  `-'\\_)  ...nos vemos pronto :D ");
+                seguirBucle = false;
             } else {
                 System.out.println("\nDame una respuesta correcta");
                 seguirBucle = true;
@@ -476,13 +406,80 @@ public class Ejercicio4 {
 
         int opcion;
         boolean continuar = false;
+        boolean opcionCinco = false;
         do {
             mostrarMenuOpciones();
             System.out.println("Escribe la opción que deseas: ");
             opcion = sc.nextInt();
+            int mes;
 
-            //mostramos el menú opciones que devolverá true o false para continuar en el bucle o no
-            continuar = escogerOpcione(opcion);
+            switch (opcion) {
+                case 1 -> {
+                    mostrarAtracciones();
+                    continuar = seguirEnPrograma();
+                }
+                case 2 -> {
+                    mostrarRestaurantes();
+                    continuar = seguirEnPrograma();
+                }
+                case 3 -> {
+                    // bucle para introducir los meses de forma correcta
+                    do {
+                        System.out.println("Introduce el mes: ");
+                        mes = sc.nextInt();
+                        if (mes < 1 || mes > 12) {
+                            System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
+                        } else {
+                            numeroAleatorio(cantidadDeDias(mes));
+                            diasDisponibles(mes);
+                        }
+
+                    } while (mes < 1 || mes > 12);
+                    continuar = seguirEnPrograma();
+                }
+                case 4 -> {
+                    mostrarPrecios();
+                    compraValida();
+                    continuar = seguirEnPrograma();
+
+                }
+                case 5 -> {
+                    int numPremio;
+                    if (!opcionCinco) {
+                        boolean ganador = false; // variable que sirve para saber si ha ganado o no
+                        for (int i = 1; i <= 3 && !ganador; i++) {
+                            System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
+                            numPremio = sc.nextInt();
+
+                            if (premio(numPremio)) {
+                                ganador = true; //Ya ha ganado y saldremos del bucle
+                            } else if (i <= 2) {
+                                ganador = false; // seguir en el bucle
+                                System.out.println("Inténtalo de nuevo.");
+                            }
+                        }
+
+                        if (!ganador) {
+                            System.out.println("Otra vez será.");
+                        }
+                        opcionCinco = true; // Opcion se vuelve true y dice que el usuario ya participó.
+                    } else {
+                        System.out.println("Ya has participado en el sorteo.");
+                    }
+
+                    continuar = seguirEnPrograma();
+                }
+                case 6 -> { System.out.println("Desconectando...");
+                    System.out.println("      |\\      _,,,---,,_\n" +
+                            "ZZZzz /,`.-'`'    -.  ;-;;,_\n" +
+                            "     |,4-  ) )-,_. ,\\ (  `'-'\n" +
+                            "    '---''(_/--'  `-'\\_)  ...nos vemos pronto :D ");
+                }
+                default -> {
+                    System.out.println("\nOpción no disponible... Vuelva a intentarlo.");
+                    continuar = seguirEnPrograma();
+                }
+            }
 
         } while (opcion != 6 && continuar);
 
