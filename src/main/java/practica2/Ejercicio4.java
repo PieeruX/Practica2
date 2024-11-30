@@ -205,12 +205,12 @@ public class Ejercicio4 {
 
     /**
      * Funcion que imprime o no el importe total de las entradas en función de los parámetros de entrada escogidos.
-     * @param verDescuento caracter de 's' si muestra importe, caracter 'n' no lo muestra
+     * @param verImporte caracter de 's' si muestra importe, caracter 'n' no lo muestra
      * @param total cantidad total del precio de las entradas
      */
 
-    public static void verNoverImporte(char verDescuento, double total) {
-        if (consultarImporte(verDescuento)){
+    public static void verNoverImporte(boolean verImporte, double total) {
+        if (verImporte){
             //Si la respuesta es true ('s'), entonces imprimimos el importe total, sino, no se imprime
             System.out.printf("Importe total: %.2f€\n", total);
         }
@@ -227,9 +227,8 @@ public class Ejercicio4 {
         boolean compraValida = false;
         double total = 0, aplicarDescuento = 0;
         int descuento = 0;
-        System.out.println("Deseas consultar cuál será el importe en función " +
-                "del número de entradas (S/N): ");
-        char verDescuento = sc.next().toUpperCase().charAt(0);
+
+        boolean verImporte = consultarImporte();
 
         do{
             System.out.println("Dime la cantidad de entradas reducidas: ");
@@ -257,7 +256,7 @@ public class Ejercicio4 {
                 total = calcularImporte(reducida, generales);
                 descuento = descuentoAsociado(total);
                 aplicarDescuento = aplicarDescuento(total, descuento);
-                verNoverImporte(verDescuento, total);
+                verNoverImporte(verImporte, total);
                 System.out.println("Aplicable descuento del " + descuento + "%");
                 System.out.printf("Importe Final: %.2f€",aplicarDescuento);
                 compraValida = true; //salimos del bucle
@@ -282,14 +281,18 @@ public class Ejercicio4 {
 
     /**
      * Función que según la respuesta que de el usuario se visualizará o no el importe
-     * @param respuesta respuesta que esocge el usuario para decidir si ver o no el importe
      * @return devuelve true si decide que si o false si decide que no
      */
 
-    public static boolean consultarImporte(char respuesta){
+    public static boolean consultarImporte(){
+        Scanner sc = new Scanner(System.in);
+
         boolean respuestaIncorrecta = true;
         boolean verDescuento = true;
         do {
+            System.out.println("Deseas consultar cuál será el importe en función " +
+                    "del número de entradas (S/N): ");
+            char respuesta = sc.next().toUpperCase().charAt(0);
 
             if (respuesta == 'S') {
                 respuestaIncorrecta = false;
