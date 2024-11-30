@@ -45,9 +45,6 @@ public class Ejercicio4 {
                 "6. Salir de la aplicación");
     }
 
-
-
-
     /**
      * Función de la opción 1 que muestra las atracciones
      */
@@ -121,6 +118,7 @@ public class Ejercicio4 {
         for (int i = 1; i <= disponible; i++){
             System.out.print(numeroAleatorio(disponible) + " ");
         }
+        System.out.println();
     }
 
     /**
@@ -363,6 +361,24 @@ public class Ejercicio4 {
         return seguir;
     }
 
+    public static void diasDisponibles(){
+        Scanner sc = new Scanner(System.in);
+        int mes;
+        // bucle para introducir los meses de forma correcta
+        do {
+            System.out.println("Introduce el mes: ");
+            mes = sc.nextInt();
+            if (mes < 1 || mes > 12) {
+                System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
+            } else {
+                numeroAleatorio(cantidadDeDias(mes));
+                diasDisponibles(mes);
+            }
+
+        } while (mes < 1 || mes > 12);
+    }
+
+
 
 
     public static void main(String[] args) {
@@ -400,7 +416,7 @@ public class Ejercicio4 {
             mostrarMenuOpciones();
             System.out.println("Escribe la opción que deseas: ");
             opcion = sc.nextInt();
-            int mes;
+
 
             switch (opcion) {
                 case 1 -> {
@@ -412,50 +428,33 @@ public class Ejercicio4 {
                     continuar = seguirEnPrograma();
                 }
                 case 3 -> {
-                    // bucle para introducir los meses de forma correcta
-                    do {
-                        System.out.println("Introduce el mes: ");
-                        mes = sc.nextInt();
-                        if (mes < 1 || mes > 12) {
-                            System.out.println("Mes introducido incorrecto. Intentalo de nuevo.");
-                        } else {
-                            numeroAleatorio(cantidadDeDias(mes));
-                            diasDisponibles(mes);
-                        }
-
-                    } while (mes < 1 || mes > 12);
+                    diasDisponibles();
                     continuar = seguirEnPrograma();
                 }
                 case 4 -> {
                     mostrarPrecios();
                     compraValida();
                     continuar = seguirEnPrograma();
-
                 }
                 case 5 -> {
                     int numPremio;
                     if (!opcionCinco) {
-                        boolean ganador = false; // variable que sirve para saber si ha ganado o no
-                        for (int i = 1; i <= 3 && !ganador; i++) {
+                        for (int i = 1; i <= 3; i++) {
                             System.out.println("Introduce el número que quieras y podrás ganar un premio: ");
                             numPremio = sc.nextInt();
 
                             if (premio(numPremio)) {
-                                ganador = true; //Ya ha ganado y saldremos del bucle
+                                i = 3;
                             } else if (i <= 2) {
-                                ganador = false; // seguir en el bucle
                                 System.out.println("Inténtalo de nuevo.");
+                            }else{
+                                System.out.println("Otra vez será.");
                             }
                         }
-
-                        if (!ganador) {
-                            System.out.println("Otra vez será.");
-                        }
-                        opcionCinco = true; // Opcion se vuelve true y dice que el usuario ya participó.
+                        opcionCinco = true; // Opcion se vuelve true para no dejar participar al usuario de nuevo
                     } else {
                         System.out.println("Ya has participado en el sorteo.");
                     }
-
                     continuar = seguirEnPrograma();
                 }
                 case 6 -> { System.out.println("Desconectando...");
@@ -474,4 +473,3 @@ public class Ejercicio4 {
 
 
     }
-}
